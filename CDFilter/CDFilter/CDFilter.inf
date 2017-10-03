@@ -1,0 +1,67 @@
+;
+; Installation file for a CDROM Upper Filter. For KMDF Filters
+; it is assumed that the Framework is already installed and present
+;
+; Copyright (c) OSR Open Systems Resources, Inc.
+[Version]
+Signature   = "$Windows NT$"
+Class       = CDROM
+ClassGUID   = {4d36e965-e325-11ce-bfc1-08002be10318}
+Provider    = %Provider%
+DriverVer   = 10/14/2013,1.0.0.0
+CatalogFile = CDFilter.cat
+
+;
+; General installation section
+;
+
+[DefaultInstall.NT]
+CopyFiles = @CDFilter.sys
+Addreg    = CDFilter.AddReg
+
+[DestinationDirs]
+DefaultDestDir = 12
+
+[CDFilter.AddReg]
+HKLM, System\CurrentControlSet\Control\Class\{4d36e965-e325-11ce-bfc1-08002be10318}, UpperFilters, 0x00010008, %DriverName%
+
+
+;
+; Service installation section
+;
+
+[DefaultInstall.NT.Services]
+AddService = CDFilter, , CDFilter.Service.Install
+
+[CDFilter.Service.Install]
+DisplayName      = %ServiceName%
+Description      = %ServiceDescription%
+ServiceBinary    = %12%\%DriverName%.sys        ;%windir%\system32\drivers\
+ServiceType      = 1                            ;SERVICE_KERNEL_DRIVER
+StartType        = 3                            ;SERVICE_DEMAND_START
+ErrorControl     = 1                            ;SERVICE_ERROR_NORMAL
+AddReg           = KMDFVerifierAddReg
+
+
+[KMDFVerifierAddReg]
+HKR, Parameters\Wdf,VerifierOn,0x00010001,0
+HKR, Parameters\Wdf,VerboseOn,0x00010001,0
+HKR, Parameters\Wdf,DbgBreakOnError,0x00010001,0
+
+
+[SourceDisksFiles]
+CDFilter.sys=1
+
+[SourceDisksNames]
+1 = %DiskId1%
+
+;
+; Localizable Strings
+;
+
+[Strings]
+Provider                = "OSR Open Systems Resources, Inc."
+ServiceDescription      = "Example CDROM Upper Filter"
+ServiceName             = "CDFilter"
+DriverName              = "CDFilter"
+DiskId1                 = "Example CDROM Upper Filter Installation Disk"

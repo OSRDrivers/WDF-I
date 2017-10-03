@@ -1,0 +1,70 @@
+;
+; Nothing_KMDF.inf
+;
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=OsrNothingClass
+ClassGuid={37E1E5FF-C046-4AA9-81EE-D379F14E61F1}			; OSR Example class
+Provider=%ManufacturerName%
+CatalogFile=Nothing_KMDF.cat
+DriverVer= ; TODO: set DriverVer in stampinf property pages
+
+[DestinationDirs]
+DefaultDestDir = 12
+
+; ================= Class section =====================
+[ClassInstall32]
+Addreg=OsrNothingClass
+
+[OsrNothingClass]
+HKR,,,0,%ClassName%
+HKR,,Icon,,-5
+
+[SourceDisksNames]
+1 = %DiskName%,,,""
+
+[SourceDisksFiles]
+Nothing_KMDF.sys  = 1,,
+
+;*****************************************
+; Install Section
+;*****************************************
+
+[Manufacturer]
+%ManufacturerName%=Standard,NT$ARCH$
+
+[Standard.NT$ARCH$]
+%Nothing_KMDF.DeviceDesc%=Nothing_KMDF_Device, Root\Nothing
+
+[Nothing_KMDF_Device.NT]
+CopyFiles=Drivers_Dir
+
+[Drivers_Dir]
+Nothing_KMDF.sys
+
+;-------------- Service installation
+[Nothing_KMDF_Device.NT.Services]
+AddService = Nothing_KMDF,%SPSVCINST_ASSOCSERVICE%, Nothing_KMDF_Service_Inst
+
+; -------------- Nothing_KMDF driver install sections
+[Nothing_KMDF_Service_Inst]
+DisplayName    = %Nothing_KMDF.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\Nothing_KMDF.sys
+AddReg         = KMDFVerifierAddReg
+
+[KMDFVerifierAddReg]
+HKR, Parameters\Wdf,VerifierOn,0x00010001,1
+HKR, Parameters\Wdf,VerboseOn,0x00010001,1
+HKR, Parameters\Wdf,DbgBreakOnError,0x00010001,1
+
+[Strings]
+SPSVCINST_ASSOCSERVICE= 0x00000002
+ManufacturerName="OSR Open Systems Resources, Inc."
+ClassName="OSR Example Devices"
+DiskName = "Nothing_KMDF Installation Disk"
+Nothing_KMDF.DeviceDesc = "OSR's Nothing_KMDF Device"
+Nothing_KMDF.SVCDESC = "OSR's Nothing_KMDF Service"

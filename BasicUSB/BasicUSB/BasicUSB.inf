@@ -1,0 +1,66 @@
+	;
+; BasicUsb.inf
+;
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=OsrNothingClass
+ClassGuid={37E1E5FF-C046-4AA9-81EE-D379F14E61F1}			; OSR Example class
+Provider=%ManufacturerName%
+CatalogFile=BasicUsb.cat
+DriverVer= ; TODO: set DriverVer in stampinf property pages
+
+[DestinationDirs]
+DefaultDestDir = 12
+
+; ================= Class section =====================
+
+[ClassInstall32]
+Addreg=SampleClassReg
+
+[SampleClassReg]
+HKR,,,0,%ClassName%
+HKR,,Icon,,-5
+
+[SourceDisksNames]
+1 = %DiskName%,,,""
+
+[SourceDisksFiles]
+BasicUsb.sys  = 1,,
+
+;*****************************************
+; Install Section
+;*****************************************
+
+[Manufacturer]
+%ManufacturerName%=Standard,NT$ARCH$
+
+[Standard.NT$ARCH$]
+%BasicUsb.DeviceDesc%=BasicUsb_Device, USB\Vid_0547&Pid_1002
+
+[BasicUsb_Device.NT]
+CopyFiles=Drivers_Dir
+
+[Drivers_Dir]
+BasicUsb.sys
+
+;-------------- Service installation
+[BasicUsb_Device.NT.Services]
+AddService = BasicUsb,%SPSVCINST_ASSOCSERVICE%, BasicUsb_Service_Inst
+
+; -------------- BasicUsb driver install sections
+[BasicUsb_Service_Inst]
+DisplayName    = %BasicUsb.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\BasicUsb.sys
+LoadOrderGroup = Extended Base
+
+[Strings]
+SPSVCINST_ASSOCSERVICE= 0x00000002
+ManufacturerName="OSR Open Systems Resources, Inc."
+ClassName="OSR Example Devices"
+DiskName = "BasicUsb Installation Disk"
+BasicUsb.DeviceDesc = "BasicUsb Device"
+BasicUsb.SVCDESC = "BasicUsb Service"
