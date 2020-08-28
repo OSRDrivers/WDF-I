@@ -1,5 +1,5 @@
 //
-// Copyright 2007-2017 OSR Open Systems Resources, Inc.
+// Copyright 2007-2020 OSR Open Systems Resources, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -16,17 +16,24 @@
 //    contributors may be used to endorse or promote products derived from this
 //    software without specific prior written permission.
 // 
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
-// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-// ARE DISCLAIMED.IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE 
-// LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
-// CONSEQUENTIAL DAMAGES(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-// SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
-// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-// CONTRACT, STRICT LIABILITY, OR TORT(INCLUDING NEGLIGENCE OR OTHERWISE)
-// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
-// POSSIBILITY OF SUCH DAMAGE
+//    This software is supplied for instructional purposes only.  It is not
+//    complete, and it is not suitable for use in any production environment.
+//
+//    OSR Open Systems Resources, Inc. (OSR) expressly disclaims any warranty
+//    for this software.  THIS SOFTWARE IS PROVIDED  "AS IS" WITHOUT WARRANTY
+//    OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, WITHOUT LIMITATION,
+//    THE IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR
+//    PURPOSE.  THE ENTIRE RISK ARISING FROM THE USE OF THIS SOFTWARE REMAINS
+//    WITH YOU.  OSR's entire liability and your exclusive remedy shall not
+//    exceed the price paid for this material.  In no event shall OSR or its
+//    suppliers be liable for any damages whatsoever (including, without
+//    limitation, damages for loss of business profit, business interruption,
+//    loss of business information, or any other pecuniary loss) arising out
+//    of the use or inability to use this software, even if OSR has been
+//    advised of the possibility of such damages.  Because some states/
+//    jurisdictions do not allow the exclusion or limitation of liability for
+//    consequential or incidental damages, the above limitation may not apply
+//    to you.
 // 
 
 #include "CDFilter.h"
@@ -63,21 +70,24 @@
 //
 //
 ///////////////////////////////////////////////////////////////////////////////
-extern "C" NTSTATUS
-DriverEntry(PDRIVER_OBJECT DriverObject, PUNICODE_STRING RegistryPath)
+NTSTATUS
+DriverEntry(PDRIVER_OBJECT  DriverObject,
+            PUNICODE_STRING RegistryPath)
 {
-    WDF_DRIVER_CONFIG config;
-    NTSTATUS status;
+    WDF_DRIVER_CONFIG driverConfig;
+    NTSTATUS          status;
 
 #if DBG
-    DbgPrint("CDFilter: OSR CDFILTER Filter Driver...Compiled %s %s\n" ,__DATE__, __TIME__);
+    DbgPrint("CDFilter: OSR CDFILTER Filter Driver...Compiled %s %s\n",
+             __DATE__,
+             __TIME__);
 #endif
 
     //
     // Initialize our driver config structure, specifying our 
-    // EvtDeviceAdd event processing callback.
+    // EvtDeviceAdd Event Processing Callback.
     //
-    WDF_DRIVER_CONFIG_INIT(&config,
+    WDF_DRIVER_CONFIG_INIT(&driverConfig,
                            CDFilterEvtDeviceAdd);
 
     //
@@ -86,17 +96,17 @@ DriverEntry(PDRIVER_OBJECT DriverObject, PUNICODE_STRING RegistryPath)
     status = WdfDriverCreate(DriverObject,
                              RegistryPath,
                              WDF_NO_OBJECT_ATTRIBUTES,
-                             &config,
-                             NULL);
+                             &driverConfig,
+                             WDF_NO_HANDLE);
 
     if (!NT_SUCCESS(status)) {
 #if DBG
-        DbgPrint("WdfDriverCreate failed - 0x%x\n", status);
+        DbgPrint("WdfDriverCreate failed - 0x%x\n",
+                 status);
 #endif
-        return status;
     }
 
-    return STATUS_SUCCESS;
+    return status;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -110,7 +120,7 @@ DriverEntry(PDRIVER_OBJECT DriverObject, PUNICODE_STRING RegistryPath)
 //
 //      DriverObject - Our WDFDRIVER object
 //
-//      DeviceInit   - The device iniitalization structure we'll
+//      DeviceInit   - The device initialization structure we'll
 //                     be using to create our WDFDEVICE
 //
 //  OUTPUTS:
@@ -131,17 +141,19 @@ DriverEntry(PDRIVER_OBJECT DriverObject, PUNICODE_STRING RegistryPath)
 //
 ///////////////////////////////////////////////////////////////////////////////
 NTSTATUS
-CDFilterEvtDeviceAdd(WDFDRIVER Driver, PWDFDEVICE_INIT DeviceInit)
+CDFilterEvtDeviceAdd(WDFDRIVER       Driver,
+                     PWDFDEVICE_INIT DeviceInit)
 {
+    NTSTATUS              status;
+    WDF_OBJECT_ATTRIBUTES objAtttributes;
+    WDFDEVICE             wdfDevice;
+    PFILTER_DEVICE_CONTEXT filterContext;
 
-    NTSTATUS status;
-    WDF_OBJECT_ATTRIBUTES wdfObjectAttr;
-    WDFDEVICE wdfDevice;
+    UNREFERENCED_PARAMETER(Driver);
 
 #if DBG
     DbgPrint("CDFilter: Adding device...\n");
 #endif
-    UNREFERENCED_PARAMETER(Driver);
 
     //
     // Indicate that we're creating a FILTER device.  This will cause
@@ -150,39 +162,34 @@ CDFilterEvtDeviceAdd(WDFDRIVER Driver, PWDFDEVICE_INIT DeviceInit)
     //
     WdfFdoInitSetFilter(DeviceInit);
 
-
     //
     // Setup our device attributes to have our context type
     //
-    WDF_OBJECT_ATTRIBUTES_INIT_CONTEXT_TYPE(&wdfObjectAttr, 
+    WDF_OBJECT_ATTRIBUTES_INIT_CONTEXT_TYPE(&objAtttributes,
                                             FILTER_DEVICE_CONTEXT);
 
-
     //
-    // And create our WDF device. This does a multitude of things,
-    //  including:
+    // And create our WDF device
     //
-    //  1) Creating a WDM device object
-    //  2) Attaching the device object to the filtered device object
-    //  3) Propogates all of the flags and characteristics of the 
-    //     target device to our filter device. So, for example, if 
-    //     the target device is setup for direct I/O our filter 
-    //     device will also be setup for direct I/O
-    //
-    status = WdfDeviceCreate(&DeviceInit, 
-                             &wdfObjectAttr, 
+    status = WdfDeviceCreate(&DeviceInit,
+                             &objAtttributes,
                              &wdfDevice);
 
     if (!NT_SUCCESS(status)) {
 #if DBG
-        DbgPrint("WdfDeviceCreate failed - 0x%x\n", status);
+        DbgPrint("WdfDeviceCreate failed - 0x%x\n",
+                 status);
 #endif
-        return status;
+        goto Done;
     }
 
-    //
-    // Success!
-    //
-    return STATUS_SUCCESS;
-}
+    filterContext = CDFilterGetDeviceContext(wdfDevice);
 
+    filterContext->WdfDevice = wdfDevice;
+
+    status = STATUS_SUCCESS;
+
+Done:
+
+    return status;
+}
