@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BasicUSB", "BasicUSB\BasicUSB.vcxproj", "{B1848C51-CD5E-4F20-879C-3C3A38E0EC22}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BasicUSB Package", "BasicUSB Package\BasicUSB Package.vcxproj", "{0210B0C2-7B89-4BC7-848E-CDC21341EE49}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BasicUSBTest", "BasicUSBTest\BasicUSBTest.vcxproj", "{C8161130-5531-4169-B6E2-F0D2C2756E62}"
 EndProject
@@ -29,18 +27,6 @@ Global
 		{B1848C51-CD5E-4F20-879C-3C3A38E0EC22}.Release|x86.ActiveCfg = Release|Win32
 		{B1848C51-CD5E-4F20-879C-3C3A38E0EC22}.Release|x86.Build.0 = Release|Win32
 		{B1848C51-CD5E-4F20-879C-3C3A38E0EC22}.Release|x86.Deploy.0 = Release|Win32
-		{0210B0C2-7B89-4BC7-848E-CDC21341EE49}.Debug|x64.ActiveCfg = Debug|x64
-		{0210B0C2-7B89-4BC7-848E-CDC21341EE49}.Debug|x64.Build.0 = Debug|x64
-		{0210B0C2-7B89-4BC7-848E-CDC21341EE49}.Debug|x64.Deploy.0 = Debug|x64
-		{0210B0C2-7B89-4BC7-848E-CDC21341EE49}.Debug|x86.ActiveCfg = Debug|Win32
-		{0210B0C2-7B89-4BC7-848E-CDC21341EE49}.Debug|x86.Build.0 = Debug|Win32
-		{0210B0C2-7B89-4BC7-848E-CDC21341EE49}.Debug|x86.Deploy.0 = Debug|Win32
-		{0210B0C2-7B89-4BC7-848E-CDC21341EE49}.Release|x64.ActiveCfg = Release|x64
-		{0210B0C2-7B89-4BC7-848E-CDC21341EE49}.Release|x64.Build.0 = Release|x64
-		{0210B0C2-7B89-4BC7-848E-CDC21341EE49}.Release|x64.Deploy.0 = Release|x64
-		{0210B0C2-7B89-4BC7-848E-CDC21341EE49}.Release|x86.ActiveCfg = Release|Win32
-		{0210B0C2-7B89-4BC7-848E-CDC21341EE49}.Release|x86.Build.0 = Release|Win32
-		{0210B0C2-7B89-4BC7-848E-CDC21341EE49}.Release|x86.Deploy.0 = Release|Win32
 		{C8161130-5531-4169-B6E2-F0D2C2756E62}.Debug|x64.ActiveCfg = Debug|x64
 		{C8161130-5531-4169-B6E2-F0D2C2756E62}.Debug|x64.Build.0 = Debug|x64
 		{C8161130-5531-4169-B6E2-F0D2C2756E62}.Debug|x86.ActiveCfg = Debug|Win32
@@ -52,5 +38,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1AAA00C1-EF00-4F97-B309-6394EE53443B}
 	EndGlobalSection
 EndGlobal

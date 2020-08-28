@@ -1,0 +1,4 @@
+// Hint files help the Visual Studio IDE interpret Visual C++ identifiers
+// such as names of functions and macros.
+// For more information see https://go.microsoft.com/fwlink/?linkid=865984
+#define WDF_DECLARE_CONTEXT_TYPE_WITH_NAME(_contexttype, _castingfunction) WDF_DECLARE_TYPE_AND_GLOBALS( _contexttype, WDF_GET_CONTEXT_TYPE_INFO(_contexttype), NULL, WDF_TYPE_DEFAULT_SECTION_NAME) WDF_DECLARE_CASTING_FUNCTION(_contexttype, _castingfunction)
