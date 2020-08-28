@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Nothing_KMDF", "Nothing_KMDF\Nothing_KMDF.vcxproj", "{F08060C0-0618-4C0A-AC82-FFFE0B3E7220}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Nothing_KMDF Package", "Nothing_KMDF Package\Nothing_KMDF Package.vcxproj", "{895ED7C5-43BF-491D-8684-C991448EE49C}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Nothing_KMDF Test", "Nothing_KMDF Test\Nothing_KMDF Test.vcxproj", "{55640215-9CDA-40BC-925F-5FEE7287739D}"
 EndProject
@@ -29,18 +27,6 @@ Global
 		{F08060C0-0618-4C0A-AC82-FFFE0B3E7220}.Release|x86.ActiveCfg = Release|Win32
 		{F08060C0-0618-4C0A-AC82-FFFE0B3E7220}.Release|x86.Build.0 = Release|Win32
 		{F08060C0-0618-4C0A-AC82-FFFE0B3E7220}.Release|x86.Deploy.0 = Release|Win32
-		{895ED7C5-43BF-491D-8684-C991448EE49C}.Debug|x64.ActiveCfg = Debug|x64
-		{895ED7C5-43BF-491D-8684-C991448EE49C}.Debug|x64.Build.0 = Debug|x64
-		{895ED7C5-43BF-491D-8684-C991448EE49C}.Debug|x64.Deploy.0 = Debug|x64
-		{895ED7C5-43BF-491D-8684-C991448EE49C}.Debug|x86.ActiveCfg = Debug|Win32
-		{895ED7C5-43BF-491D-8684-C991448EE49C}.Debug|x86.Build.0 = Debug|Win32
-		{895ED7C5-43BF-491D-8684-C991448EE49C}.Debug|x86.Deploy.0 = Debug|Win32
-		{895ED7C5-43BF-491D-8684-C991448EE49C}.Release|x64.ActiveCfg = Release|x64
-		{895ED7C5-43BF-491D-8684-C991448EE49C}.Release|x64.Build.0 = Release|x64
-		{895ED7C5-43BF-491D-8684-C991448EE49C}.Release|x64.Deploy.0 = Release|x64
-		{895ED7C5-43BF-491D-8684-C991448EE49C}.Release|x86.ActiveCfg = Release|Win32
-		{895ED7C5-43BF-491D-8684-C991448EE49C}.Release|x86.Build.0 = Release|Win32
-		{895ED7C5-43BF-491D-8684-C991448EE49C}.Release|x86.Deploy.0 = Release|Win32
 		{55640215-9CDA-40BC-925F-5FEE7287739D}.Debug|x64.ActiveCfg = Debug|x64
 		{55640215-9CDA-40BC-925F-5FEE7287739D}.Debug|x64.Build.0 = Debug|x64
 		{55640215-9CDA-40BC-925F-5FEE7287739D}.Debug|x86.ActiveCfg = Debug|Win32
@@ -52,5 +38,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4A338168-FDCD-400A-8DC5-942AED884C39}
 	EndGlobalSection
 EndGlobal

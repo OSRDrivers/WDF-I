@@ -28,9 +28,16 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
 // POSSIBILITY OF SUCH DAMAGE
 // 
+#pragma once
 
-#ifndef __NOTHING_IOCTL_H__
-#define __NOTHING_IOCTL_H__ (1)
+
+//
+// Generate our device interface GUID
+//
+#include <initguid.h> // required for GUID definitions
+DEFINE_GUID(GUID_DEVINTERFACE_NOTHING,
+            0x79963ae7, 0x45de, 0x4a31, 0x8f, 0x34, 0xf0, 0xe8, 0x90, 0xb, 0xc2, 0x17);
+
 
 //
 // The following value is arbitrarily chosen from the space defined by Microsoft
@@ -42,7 +49,4 @@
 // Device control codes - values between 2048 and 4095 arbitrarily chosen
 //
 #define IOCTL_OSR_NOTHING CTL_CODE(FILE_DEVICE_NOTHING, 2049, METHOD_BUFFERED, FILE_ANY_ACCESS)
-
-
-#endif /* __NOTHING_IOCTL_H__ */
 
