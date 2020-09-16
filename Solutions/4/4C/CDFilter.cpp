@@ -281,20 +281,23 @@ CDFilterEvtRead(WDFQUEUE   Queue,
     devContext = CDFilterGetDeviceContext(WdfIoQueueGetDevice(Queue));
 
     //
-    // We're just going to be passing this Request on with 
-    // zero regard for what happens to it and we don't want to handle
-    // it at all after the I/O Target completes it.  Therefore, we'll
-    // use the WDF_REQUEST_SEND_OPTION_SEND_AND_FORGET option
+    // Establish the Request parameters (buffer description, etc) that'll
+    // be seen by the receiving driver.
     //
-    WDF_REQUEST_SEND_OPTIONS_INIT(&options,
-                                  WDF_REQUEST_SEND_OPTION_SEND_AND_FORGET);
+    WdfRequestFormatRequestUsingCurrentType(Request);
 
+    //
+    // Set a completion routine to be called when the Request is done...
+    //
+    WdfRequestSetCompletionRoutine(Request,
+                                   CDFilterReadComplete,
+                                   nullptr);
     //
     // And send it!
     // 
     if (!WdfRequestSend(Request,
                         WdfDeviceGetIoTarget(devContext->WdfDevice),
-                        &options)) {
+                        WDF_NO_SEND_OPTIONS)) {
 
         //
         // Oops! Something bad happened and the Request was NOT sent
@@ -309,4 +312,66 @@ CDFilterEvtRead(WDFQUEUE   Queue,
         WdfRequestComplete(Request,
                            status);
     }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//
+//  WdfFltrReadComplete
+//
+//      This routine is our completion routine for read requests sent to the 
+//      filtered device
+//
+//  INPUTS:
+//
+//      Queue   - Our filter device's default WDF queue
+//
+//      Target  - The I/O target of our default queue (i.e. an I/O target that
+//                targets the filtered device
+//
+//      Params  - The completion information for the request
+//
+//      Context - Whatever context we supplied to WdfRequestSetCompletionRoutine
+//
+//  OUTPUTS:
+//
+//      None.
+//
+//  RETURNS:
+//
+//      None
+//
+//  IRQL:
+//
+//      Depends entirely on the device that you're filtering. Typically
+//      <= DISPATCH_LEVEL
+//
+//  NOTES:
+//
+///////////////////////////////////////////////////////////////////////////////
+VOID
+CDFilterReadComplete(
+    IN WDFREQUEST                     Request,
+    IN WDFIOTARGET                    Target,
+    IN PWDF_REQUEST_COMPLETION_PARAMS Params,
+    IN WDFCONTEXT                     Context
+    )
+{
+    UNREFERENCED_PARAMETER(Context);
+    UNREFERENCED_PARAMETER(Target);
+
+    //
+    // Print the status and number of bytes read to the debugger
+    //
+#if DBG
+    DbgPrint("CDFilterReadComplete: Status-0x%x; Information-0x%x\n",
+             Params->IoStatus.Status,
+             Params->IoStatus.Information);
+#endif
+
+    //
+    // Now that we've seen it, complete the Request.
+    //
+    WdfRequestCompleteWithInformation(Request,
+                                      Params->IoStatus.Status,
+                                      Params->IoStatus.Information);
 }

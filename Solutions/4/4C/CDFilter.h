@@ -35,80 +35,35 @@
 //    consequential or incidental damages, the above limitation may not apply
 //    to you.
 // 
+
 #pragma once
 
-#include <ntddk.h>
+#include <wdm.h>
 #include <wdf.h>
 
-#include "NOTHING_IOCTL.h"
+//
+// Our per device context
+//
+typedef struct _FILTER_DEVICE_CONTEXT {
+
+    WDFDEVICE   WdfDevice;
+
+    WDFIOTARGET LocalTarget;
+
+} FILTER_DEVICE_CONTEXT, *PFILTER_DEVICE_CONTEXT;
+
 
 //
-// Choose an arbitrary maximum buffer length
+// Context accessor function
 //
-#define NOTHING_BUFFER_MAX_LENGTH 4096
+WDF_DECLARE_CONTEXT_TYPE_WITH_NAME(FILTER_DEVICE_CONTEXT,
+                                   CDFilterGetDeviceContext)
 
-//
-// Nothing device context structure
-//
-// KMDF will associate this structure with each "Nothing" device that
-// this driver creates.
-//
-typedef struct _NOTHING_DEVICE_CONTEXT {
-
-    ULONG Nothing;
-
-    //
-    // Manual queues for holding incoming requests if no data
-    // pending.
-    //
-    WDFQUEUE ReadQueue;
-    WDFQUEUE WriteQueue;
-
-    //
-    // We'll keep all the outstanding WDFFILEOBJECTs in a
-    // collection.
-    //
-    WDFCOLLECTION FileObjectsCollection;
-
-    //
-    // Lock that guards removals from the above collection
-    //
-    WDFSPINLOCK FileObjectsCollectionLock;
-
-    //
-    // The WDFILEOBJECT of the only caller allowed to write to the
-    // buffer.
-    //
-    WDFFILEOBJECT AllowedWriter;
-
-}  NOTHING_DEVICE_CONTEXT, *PNOTHING_DEVICE_CONTEXT;
-
-//
-// Accessor structure
-//
-// Given a WDFDEVICE handle, we'll use the following function to return
-// a pointer to our device's context area.
-//
-WDF_DECLARE_CONTEXT_TYPE_WITH_NAME(NOTHING_DEVICE_CONTEXT,
-                                   NothingGetContextFromDevice)
-
-//
-// Forward declarations
-//
 extern "C" {
     DRIVER_INITIALIZE DriverEntry;
 }
-EVT_WDF_DRIVER_DEVICE_ADD          NothingEvtDeviceAdd;
-EVT_WDF_IO_QUEUE_IO_READ           NothingEvtRead;
-EVT_WDF_IO_QUEUE_IO_WRITE          NothingEvtWrite;
-EVT_WDF_IO_QUEUE_IO_DEVICE_CONTROL NothingEvtDeviceControl;
 
-EVT_WDF_DEVICE_D0_ENTRY            NothingEvtDeviceD0Entry;
-EVT_WDF_DEVICE_D0_EXIT             NothingEvtDeviceD0Exit;
+EVT_WDF_DRIVER_DEVICE_ADD CDFilterEvtDeviceAdd;
 
-EVT_WDF_DEVICE_FILE_CREATE NothingEvtFdoCreate;
-EVT_WDF_FILE_CLOSE NothingEvtFdoClose;
-
-//
-CHAR const *
-WdfPowerDeviceStateToString(WDF_POWER_DEVICE_STATE DeviceState);
+EVT_WDF_IO_QUEUE_IO_READ CDFilterEvtRead;
+EVT_WDF_REQUEST_COMPLETION_ROUTINE CDFilterReadComplete;
