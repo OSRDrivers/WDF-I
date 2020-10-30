@@ -8,14 +8,15 @@
 
 #include <stdio.h>
 #include <windows.h>
-#include <winioctl.h>
 #include <basicusb_ioctl.h>
 
 //
 // Simple test application to demonstrate the BasicUSB driver
 //
 
-__cdecl main(ULONG argc, LPSTR *argv)
+int
+__cdecl
+main(ULONG argc, LPSTR *argv)
 {
     HANDLE deviceHandle;
     DWORD  code;
@@ -50,7 +51,7 @@ __cdecl main(ULONG argc, LPSTR *argv)
 
         code = GetLastError();
 
-        printf("CreateFile failed with error 0x%x\n", code);
+        printf("CreateFile failed with error 0x%lx\n", code);
 
         return(code);
     }
@@ -68,7 +69,8 @@ __cdecl main(ULONG argc, LPSTR *argv)
         printf ("\t4. Send SET_BAR_GRAPH IOCTL - All Off\n");
         printf ("\n\t0. Exit\n");
         printf ("\n\tSelection: ");
-        scanf ("%x", &function);
+#pragma warning(suppress: 6031)
+        scanf ("%x", &function);  // NOLINT(cert-err34-c)
 
         switch(function)  {
 
@@ -84,11 +86,11 @@ __cdecl main(ULONG argc, LPSTR *argv)
 
                 code = GetLastError();
 
-                printf("ReadFile failed with error 0x%x\n", code);
+                printf("ReadFile failed with error 0x%lx\n", code);
 
                 return(code);
             }
-            printf("Bytes Read = %d.\n", index);
+            printf("Bytes Read = %ld.\n", index);
             break;
 
         case 2:
@@ -103,11 +105,11 @@ __cdecl main(ULONG argc, LPSTR *argv)
 
                 code = GetLastError();
 
-                printf("WriteFile failed with error 0x%x\n", code);
+                printf("WriteFile failed with error 0x%lx\n", code);
 
                 return(code);
             }
-            printf("Bytes Written = %d.\n", index);
+            printf("Bytes Written = %ld.\n", index);
             break;
 
         case 3:
@@ -124,7 +126,7 @@ __cdecl main(ULONG argc, LPSTR *argv)
 
                 code = GetLastError();
 
-                printf("DeviceIoControl failed with error 0x%x\n", code);
+                printf("DeviceIoControl failed with error 0x%lx\n", code);
                 return(code);
 
             }
@@ -145,7 +147,7 @@ __cdecl main(ULONG argc, LPSTR *argv)
 
                 code = GetLastError();
 
-                printf("DeviceIoControl failed with error 0x%x\n", code);
+                printf("DeviceIoControl failed with error 0x%lx\n", code);
                 return(code);
 
             }
@@ -157,6 +159,9 @@ __cdecl main(ULONG argc, LPSTR *argv)
             // zero is get out!
             //
             return(0);
+
+        default:
+            break;
 
         }
     }   

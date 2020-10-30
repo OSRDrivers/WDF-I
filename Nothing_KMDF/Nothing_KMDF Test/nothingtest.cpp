@@ -9,10 +9,8 @@
 #define _CRT_SECURE_NO_WARNINGS
 
 #include <cstdio>
-//#include <cstdlib>
 #include <windows.h>
 #include <cfgmgr32.h>
-#include <winioctl.h>
 #include <nothing_ioctl.h>
 
 HANDLE
@@ -106,8 +104,9 @@ main(ULONG  argc,
         printf("\n\t0. Exit\n");
         printf("\n\tSelection: ");
 
+#pragma warning(suppress: 6031)
         scanf("%x",
-              &function);
+              &function);   // NOLINT(cert-err34-c)
 
         switch (function) {
 
@@ -218,6 +217,9 @@ main(ULONG  argc,
                 //
                 return (0);
 
+            default:
+                break;
+
         }
     }
 }
@@ -256,6 +258,8 @@ OpenNothingDeviceViaInterface()
     //
     if (deviceName[0] == UNICODE_NULL) {
         lasterror = ERROR_NOT_FOUND;
+        printf("CreateFile fail: %lx\n",
+               lasterror);
         goto Exit;
     }
 
