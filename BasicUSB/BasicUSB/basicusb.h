@@ -37,9 +37,34 @@
 // 
 #pragma once
 
+#define BUILDING_IN_KERNEL_MODE _KERNEL_MODE
+
+#ifndef BUILDING_IN_KERNEL_MODE
+
+//
+// Building the driver using UMDF
+//
+#include <Windows.h>
+#include <usb.h>
+
+#define ASSERT( exp ) \
+    ((!(exp)) ? \
+        (RtlAssert( (PVOID)#exp, (PVOID)__FILE__, __LINE__, NULL ),FALSE) : \
+        TRUE)
+
+#define KeGetCurrentIrql() (PASSIVE_LEVEL)
+
+#else
+
+//
+// Building the driver using KMDF
+//
 #include <ntddk.h>
 #include <usbdi.h>
 #include <usbdlib.h>
+
+#endif
+
 #include <wdf.h>
 #include <wdfusb.h>
 

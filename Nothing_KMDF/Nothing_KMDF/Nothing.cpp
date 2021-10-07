@@ -149,8 +149,15 @@ NothingEvtDeviceAdd(WDFDRIVER       Driver,
     WDFDEVICE             device;
     WDF_IO_QUEUE_CONFIG   queueConfig;
 
+#ifdef _KERNEL_MODE
+
     DECLARE_CONST_UNICODE_STRING(userDeviceName,
                                  L"\\DosDevices\\Nothing");
+#else
+
+    DECLARE_CONST_UNICODE_STRING(userDeviceName,
+                                 L"\\DosDevices\\Global\\Nothing");
+#endif
 
     UNREFERENCED_PARAMETER(Driver);
 

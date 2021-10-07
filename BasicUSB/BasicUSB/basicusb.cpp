@@ -77,7 +77,10 @@ DriverEntry(PDRIVER_OBJECT  DriverObject,
     WDF_DRIVER_CONFIG config;
     NTSTATUS          status;
 
+#ifdef _KERNEL_MODE
+
     ExInitializeDriverRuntime(DrvRtPoolNxOptIn);
+#endif
 
 #if DBG
     DbgPrint("\nOSR BasicUsb Driver -- Compiled %s %s\n",
@@ -111,7 +114,6 @@ DriverEntry(PDRIVER_OBJECT  DriverObject,
 
     return (status);
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -161,8 +163,16 @@ BasicUsbEvtDeviceAdd(WDFDRIVER       Driver,
     //
     // Our user-accessible device names
     //
+#ifdef _KERNEL_MODE
+
     DECLARE_CONST_UNICODE_STRING(userDeviceName,
-                                 L"\\Global??\\BasicUsb");
+                                 L"\\DosDevices\\BasicUsb");
+#else
+
+    DECLARE_CONST_UNICODE_STRING(userDeviceName,
+                                 L"\\DosDevices\\Global\\BasicUsb");
+#endif
+
 
     UNREFERENCED_PARAMETER(Driver);
 
@@ -179,12 +189,14 @@ BasicUsbEvtDeviceAdd(WDFDRIVER       Driver,
     WDF_OBJECT_ATTRIBUTES_SET_CONTEXT_TYPE(&objAttributes,
                                            BASICUSB_DEVICE_CONTEXT);
 
+#if _KERNEL_MODE
     //
     // Set our I/O type to DIRECT, meaning that we want do not want
     // to copy data sent with read/write.
     //
     WdfDeviceInitSetIoType(DeviceInit,
                            WdfDeviceIoDirect);
+#endif
 
     //
     // In this driver we need to be notified of some Pnp/Power
@@ -313,6 +325,11 @@ BasicUsbEvtDeviceAdd(WDFDRIVER       Driver,
     status = STATUS_SUCCESS;
 
 Done:
+
+    DbgPrint("DeviceAdd completes with status 0x%lx\n", status);
+
+    DbgBreakPoint();
+
 
     return (status);
 }
@@ -532,7 +549,7 @@ BasicUsbEvtDevicePrepareHardware(WDFDEVICE    Device,
                 // Not handling any other Endpoints at this time
                 //
 #if DBG
-                DbgPrint("Unhandled EP 0x%x type 0x%x\n",
+                DbgPrint("EP 0x%x type 0x%x is not used\n",
                          pipeInfo.EndpointAddress,
                          pipeInfo.PipeType);
 #endif

@@ -37,7 +37,29 @@
 // 
 #pragma once
 
-#include <ntddk.h>
+//
+// We define our own symbol to indicate whether we're doing a KMDF or UMDF
+// build, because ReSharper sometimes gets confused when using pre-processor
+// symbols that are only defined on the command-line.  This fixes that.
+//
+#define BUILDING_IN_KERNEL_MODE _KERNEL_MODE
+
+#ifndef BUILDING_IN_KERNEL_MODE
+
+//
+// Building the driver using UMDF
+//
+#include <Windows.h>
+
+#else
+
+//
+// Building the driver using KMDF
+//
+#include <wdm.h>
+
+#endif
+
 #include <wdf.h>
 
 #include "NOTHING_IOCTL.h"

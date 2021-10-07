@@ -48,6 +48,15 @@ BasicUsb.sys
 [BasicUsb_Device.NT.Services]
 AddService = BasicUsb,%SPSVCINST_ASSOCSERVICE%, BasicUsb_Service_Inst
 
+;
+; **** Converting this driver to UMDF???
+;
+; If so, don't forget to add UmdfDispatcher=NativeUSB
+; to the BasicUsb.Wdf section.  If you don't do this
+; the call to WdfUsbTargetDeviceCreateWithParameters
+; in EvtDevicePrepareHardware will fail.
+;
+
 ; -------------- BasicUsb driver install sections
 [BasicUsb_Service_Inst]
 DisplayName    = %BasicUsb.SVCDESC%
