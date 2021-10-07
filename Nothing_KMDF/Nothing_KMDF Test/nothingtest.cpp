@@ -9,7 +9,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 
 #include <cstdio>
-#include <windows.h>
+#include <Windows.h>
 #include <cfgmgr32.h>
 #include <nothing_ioctl.h>
 

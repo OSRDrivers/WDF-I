@@ -4,6 +4,9 @@
 // Win32 console mode program to fire up requests to the
 // BASICUSB driver.
 //
+// This code is purely functional, and is definitely not designed to be any
+// sort of example.
+//
 #define _CRT_SECURE_NO_WARNINGS
 
 #include <stdio.h>

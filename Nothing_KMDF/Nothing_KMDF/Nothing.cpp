@@ -1,5 +1,5 @@
 //
-// Copyright 2007-2020 OSR Open Systems Resources, Inc.
+// Copyright 2007-2021 OSR Open Systems Resources, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -217,12 +217,12 @@ NothingEvtDeviceAdd(WDFDRIVER       Driver,
                                            WdfIoQueueDispatchSequential);
 
     //
-    // Declare our I/O Event Processing callbacks
+    // Define our I/O Event Processing callbacks
     //
-    // We handle, read, write, and device control requests.
+    // We handle, read, write, and device control (IOCTL) requests.
     //
     // WDF will automagically handle Create and Close requests for us and will
-    // will complete any other request types with STATUS_INVALID_DEVICE_REQUEST.    
+    // complete any other request types with STATUS_INVALID_DEVICE_REQUEST.    
     //
     queueConfig.EvtIoRead          = NothingEvtRead;
     queueConfig.EvtIoWrite         = NothingEvtWrite;
@@ -258,7 +258,7 @@ Done:
 //
 //  NothingEvtRead
 //
-//    This routine is called by the framework when there is a
+//    This routine is called by the Framework when there is a
 //    read request for us to process
 //
 //  INPUTS:
@@ -318,7 +318,7 @@ NothingEvtRead(WDFQUEUE   Queue,
 //
 //  NothingEvtWrite
 //
-//    This routine is called by the framework when there is a
+//    This routine is called by the Framework when there is a
 //    read request for us to process
 //
 //  INPUTS:
@@ -368,7 +368,7 @@ NothingEvtWrite(WDFQUEUE   Queue,
 //
 //  NothingEvtDeviceControl
 //
-//    This routine is called by the framework when there is a
+//    This routine is called by the Framework when there is a
 //    device control request for us to process
 //
 //  INPUTS:
@@ -393,8 +393,7 @@ NothingEvtWrite(WDFQUEUE   Queue,
 //
 //  IRQL:
 //
-//      This routine is called at IRQL == PASSIVE_LEVEL, due to
-//      our PASSIVE_LEVEL execution level contraint
+//      This routine is called at IRQL <= DISPATCH_LEVEL
 //
 //  NOTES:
 //

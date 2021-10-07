@@ -1,5 +1,5 @@
 //
-// Copyright 2007-2020 OSR Open Systems Resources, Inc.
+// Copyright 2007-2021 OSR Open Systems Resources, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -273,7 +273,6 @@ BasicUsbEvtDeviceAdd(WDFDRIVER       Driver,
     // We only use the default queue, and we set it for parallel dispatching.
     // This allows us to have multiple Requests (including both writes and reads)
     // in-progress simultaneously from our single default Queue.
-    //
     //
     WDF_IO_QUEUE_CONFIG_INIT_DEFAULT_QUEUE(&queueConfig,
                                            WdfIoQueueDispatchParallel);

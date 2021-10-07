@@ -1,5 +1,5 @@
 //
-// Copyright 2007-2020 OSR Open Systems Resources, Inc.
+// Copyright 2007-2021 OSR Open Systems Resources, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -157,8 +157,9 @@ CDFilterEvtDeviceAdd(WDFDRIVER       Driver,
 
     //
     // Indicate that we're creating a FILTER device.  This will cause
-    // KMDF to attach us correctly to the device stack and auto-forward
-    // any requests we don't explicitly handle.
+    // KMDF to attach us correctly to the device stack, to automagically
+    // set us to NOT be the Power Policy Owner and to auto-forward any
+    // requests we don't explicitly handle down to our Local I/O Target.
     //
     WdfFdoInitSetFilter(DeviceInit);
 
