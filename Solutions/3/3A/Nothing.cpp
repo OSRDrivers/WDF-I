@@ -1,5 +1,5 @@
 //
-// Copyright 2007-2020 OSR Open Systems Resources, Inc.
+// Copyright 2007-2022 OSR Open Systems Resources, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -120,7 +120,7 @@ DriverEntry(PDRIVER_OBJECT  DriverObject,
 //
 //      DriverObject - Our WDFDRIVER object
 //
-//      DeviceInit   - The device iniitalization structure we'll
+//      DeviceInit   - The device initialization structure we'll
 //                     be using to create our WDFDEVICE
 //
 //  OUTPUTS:
@@ -337,7 +337,7 @@ NothingEvtDeviceD0Entry(WDFDEVICE              Device,
 
 #if DBG
     DbgPrint("NothingEvtDeviceD0Entry - Entering D0 from state %s (%d)\n",
-             WdfPowerDeviceStateToString(PreviousState),
+             NothingPowerDeviceStateToString(PreviousState),
              PreviousState);
 #endif
 
@@ -356,7 +356,7 @@ NothingEvtDeviceD0Entry(WDFDEVICE              Device,
 //
 //      Device       - One of our WDFDEVICE objects
 //
-//      PreviousState - The D-State we're entering
+//      TargetState - The D-State we're entering
 //
 //  OUTPUTS:
 //
@@ -384,8 +384,8 @@ NothingEvtDeviceD0Exit(WDFDEVICE              Device,
     UNREFERENCED_PARAMETER(Device);
 
 #if DBG
-    DbgPrint("BasicUsbEvtDeviceD0Exit - Entering state %s (%d)\n",
-             WdfPowerDeviceStateToString(TargetState),
+    DbgPrint("NothingEvtDeviceD0Exit - Entering state %s (%d)\n",
+             NothingPowerDeviceStateToString(TargetState),
              TargetState);
 #endif
 
@@ -526,15 +526,15 @@ done:
 //  NothingEvtWrite
 //
 //    This routine is called by the framework when there is a
-//    read request for us to process
+//    write request for us to process
 //
 //  INPUTS:
 //
 //      Queue    - Our default queue
 //
-//      Request  - A read request
+//      Request  - A write request
 //
-//      Length   - The length of the read operation
+//      Length   - The length of the write operation
 //
 //  OUTPUTS:
 //
@@ -706,7 +706,7 @@ NothingEvtDeviceControl(WDFQUEUE   Queue,
 }
 
 CHAR const *
-WdfPowerDeviceStateToString(
+NothingPowerDeviceStateToString(
     WDF_POWER_DEVICE_STATE DeviceState
     ) {
 

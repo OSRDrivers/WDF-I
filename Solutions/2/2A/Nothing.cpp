@@ -1,5 +1,5 @@
 //
-// Copyright 2007-2020 OSR Open Systems Resources, Inc.
+// Copyright 2007-2022 OSR Open Systems Resources, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -120,7 +120,7 @@ DriverEntry(PDRIVER_OBJECT  DriverObject,
 //
 //      DriverObject - Our WDFDRIVER object
 //
-//      DeviceInit   - The device iniitalization structure we'll
+//      DeviceInit   - The device initialization structure we'll
 //                     be using to create our WDFDEVICE
 //
 //  OUTPUTS:
@@ -335,15 +335,15 @@ NothingEvtRead(WDFQUEUE   Queue,
 //  NothingEvtWrite
 //
 //    This routine is called by the framework when there is a
-//    read request for us to process
+//    write request for us to process
 //
 //  INPUTS:
 //
 //      Queue    - Our default queue
 //
-//      Request  - A read request
+//      Request  - A write request
 //
-//      Length   - The length of the read operation
+//      Length   - The length of the write operation
 //
 //  OUTPUTS:
 //

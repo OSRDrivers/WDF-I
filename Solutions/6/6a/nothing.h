@@ -1,5 +1,5 @@
 //
-// Copyright 2007-2020 OSR Open Systems Resources, Inc.
+// Copyright 2007-2022 OSR Open Systems Resources, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -111,4 +111,4 @@ EVT_WDF_FILE_CLOSE NothingEvtFdoClose;
 
 //
 CHAR const *
-WdfPowerDeviceStateToString(WDF_POWER_DEVICE_STATE DeviceState);
+NothingPowerDeviceStateToString(WDF_POWER_DEVICE_STATE DeviceState);

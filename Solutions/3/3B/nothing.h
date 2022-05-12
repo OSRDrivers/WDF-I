@@ -91,4 +91,4 @@ EVT_WDF_DEVICE_D0_EXIT             NothingEvtDeviceD0Exit;
 
 //
 CHAR const *
-WdfPowerDeviceStateToString(WDF_POWER_DEVICE_STATE DeviceState);
+NothingPowerDeviceStateToString(WDF_POWER_DEVICE_STATE DeviceState);

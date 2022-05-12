@@ -1,5 +1,5 @@
 //
-// Copyright 2007-2020 OSR Open Systems Resources, Inc.
+// Copyright 2007-2022 OSR Open Systems Resources, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -47,8 +47,6 @@
 typedef struct _FILTER_DEVICE_CONTEXT {
 
     WDFDEVICE   WdfDevice;
-
-    WDFIOTARGET LocalTarget;
 
 } FILTER_DEVICE_CONTEXT, *PFILTER_DEVICE_CONTEXT;
 

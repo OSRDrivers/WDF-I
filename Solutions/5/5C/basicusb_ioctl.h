@@ -1,5 +1,5 @@
 //
-// Copyright 2007-2017 OSR Open Systems Resources, Inc.
+// Copyright 2007-2022 OSR Open Systems Resources, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without

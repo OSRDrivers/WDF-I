@@ -1,5 +1,5 @@
 //
-// Copyright 2007-2020 OSR Open Systems Resources, Inc.
+// Copyright 2007-2022 OSR Open Systems Resources, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -124,7 +124,7 @@ DriverEntry(PDRIVER_OBJECT  DriverObject,
 //
 //      DriverObject - Our WDFDRIVER object
 //
-//      DeviceInit   - The device iniitalization structure we'll
+//      DeviceInit   - The device initialization structure we'll
 //                     be using to create our WDFDEVICE
 //
 //  OUTPUTS:
@@ -563,10 +563,12 @@ BasicUsbEvtDevicePrepareHardware(WDFDEVICE    Device,
     // We hopefully have found everything we need...
     //
     if (devContext->BulkOutPipe == nullptr ||
+        devContext->BulkInPipe == nullptr ||
         devContext->InterruptInPipe == nullptr) {
 #if DBG
-        DbgPrint("Didn't find expected pipes. BOUT=0x%p, IIN=0x%p\n",
+        DbgPrint("Didn't find expected pipes. BOUT=0x%p, BIN= 0x%p, IIN=0x%p\n",
                  devContext->BulkOutPipe,
+                 devContext->BulkInPipe,
                  devContext->InterruptInPipe);
 
 #endif

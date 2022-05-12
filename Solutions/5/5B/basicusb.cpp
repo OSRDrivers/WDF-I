@@ -1,5 +1,5 @@
 //
-// Copyright 2007-2020 OSR Open Systems Resources, Inc.
+// Copyright 2007-2022 OSR Open Systems Resources, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -124,7 +124,7 @@ DriverEntry(PDRIVER_OBJECT  DriverObject,
 //
 //      DriverObject - Our WDFDRIVER object
 //
-//      DeviceInit   - The device iniitalization structure we'll
+//      DeviceInit   - The device initialization structure we'll
 //                     be using to create our WDFDEVICE
 //
 //  OUTPUTS:
