@@ -105,7 +105,7 @@ main(ULONG  argc,
         printf("\n\tSelection: ");
 
 #pragma warning(suppress: 6031)
-        scanf("%x",
+        scanf("%lx",
               &function);   // NOLINT(cert-err34-c)
 
         switch (function) {

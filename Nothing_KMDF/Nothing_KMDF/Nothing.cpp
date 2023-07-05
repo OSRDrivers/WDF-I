@@ -1,5 +1,5 @@
 //
-// Copyright 2007-2022 OSR Open Systems Resources, Inc.
+// Copyright 2007-2023 OSR Open Systems Resources, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -7,15 +7,15 @@
 //
 // 1. Redistributions of source code must retain the above copyright notice,
 //    this list of conditions and the following disclaimer.
-// 
+//
 // 2. Redistributions in binary form must reproduce the above copyright notice,
 //    this list of conditions and the following disclaimer in the documentation
 //    and/or other materials provided with the distribution.
-// 
+//
 // 3. Neither the name of the copyright holder nor the names of its
 //    contributors may be used to endorse or promote products derived from this
 //    software without specific prior written permission.
-// 
+//
 //    This software is supplied for instructional purposes only.  It is not
 //    complete, and it is not suitable for use in any production environment.
 //
@@ -34,7 +34,7 @@
 //    jurisdictions do not allow the exclusion or limitation of liability for
 //    consequential or incidental damages, the above limitation may not apply
 //    to you.
-// 
+//
 
 #include "nothing.h"
 
@@ -51,7 +51,7 @@
 //                     driver.
 //
 //      RegistryPath - UNICODE_STRING which represents this driver's key in the
-//                     Registry.  
+//                     Registry.
 //
 //  OUTPUTS:
 //
@@ -162,10 +162,10 @@ NothingEvtDeviceAdd(WDFDRIVER       Driver,
     UNREFERENCED_PARAMETER(Driver);
 
     //
-    // Life is nice and simple in this driver... 
+    // Life is nice and simple in this driver...
     //
     // We don't need ANY PnP/Power Event Processing callbacks. There's no
-    // hardware, thus we don't need EvtPrepareHardware or EvtReleaseHardware 
+    // hardware, thus we don't need EvtPrepareHardware or EvtReleaseHardware
     // There's no power state to handle so we don't need EvtD0Entry or EvtD0Exit.
     //
 
@@ -229,7 +229,7 @@ NothingEvtDeviceAdd(WDFDRIVER       Driver,
     // We handle, read, write, and device control (IOCTL) requests.
     //
     // WDF will automagically handle Create and Close requests for us and will
-    // complete any other request types with STATUS_INVALID_DEVICE_REQUEST.    
+    // complete any other request types with STATUS_INVALID_DEVICE_REQUEST.
     //
     queueConfig.EvtIoRead          = NothingEvtRead;
     queueConfig.EvtIoWrite         = NothingEvtWrite;

@@ -1,5 +1,5 @@
 //
-// Copyright 2007-2022 OSR Open Systems Resources, Inc.
+// Copyright 2007-2023 OSR Open Systems Resources, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -7,15 +7,15 @@
 //
 // 1. Redistributions of source code must retain the above copyright notice,
 //    this list of conditions and the following disclaimer.
-// 
+//
 // 2. Redistributions in binary form must reproduce the above copyright notice,
 //    this list of conditions and the following disclaimer in the documentation
 //    and/or other materials provided with the distribution.
-// 
+//
 // 3. Neither the name of the copyright holder nor the names of its
 //    contributors may be used to endorse or promote products derived from this
 //    software without specific prior written permission.
-// 
+//
 //    This software is supplied for instructional purposes only.  It is not
 //    complete, and it is not suitable for use in any production environment.
 //
@@ -34,7 +34,7 @@
 //    jurisdictions do not allow the exclusion or limitation of liability for
 //    consequential or incidental damages, the above limitation may not apply
 //    to you.
-// 
+//
 
 #include "basicusb.h"
 
@@ -51,7 +51,7 @@
 //                     driver.
 //
 //      RegistryPath - UNICODE_STRING which represents this driver's key in the
-//                     Registry.  
+//                     Registry.
 //
 //  OUTPUTS:
 //
@@ -295,7 +295,7 @@ BasicUsbEvtDeviceAdd(WDFDRIVER       Driver,
     // We handle read, write, and device control requests.
     //
     // The Framework automagically handles Create and Close requests for us and will
-    // will complete any OTHER request types with STATUS_INVALID_DEVICE_REQUEST.    
+    // will complete any OTHER request types with STATUS_INVALID_DEVICE_REQUEST.
     //
     queueConfig.EvtIoRead          = BasicUsbEvtRead;
     queueConfig.EvtIoWrite         = BasicUsbEvtWrite;
@@ -402,7 +402,7 @@ BasicUsbEvtDevicePrepareHardware(WDFDEVICE    Device,
     // this by having an EvtDeviceReleaseHardware and cleaning up the USB
     // device target, but we'll just leave it around and avoid creating it
     // multiple times with this check.
-    // 
+    //
     if (devContext->UsbDeviceTarget == nullptr) {
 
 #if NTDDI_VERSION >= NTDDI_WIN8
@@ -653,10 +653,8 @@ Done:
 //
 ///////////////////////////////////////////////////////////////////////////////
 NTSTATUS
-BasicUsbEvtDeviceD0Entry(
-    IN WDFDEVICE              Device,
-    IN WDF_POWER_DEVICE_STATE PreviousState
-    )
+BasicUsbEvtDeviceD0Entry(WDFDEVICE              Device,
+                         WDF_POWER_DEVICE_STATE PreviousState)
 {
     PBASICUSB_DEVICE_CONTEXT devContext;
     NTSTATUS                 status;
@@ -724,10 +722,8 @@ Done:
 //
 ///////////////////////////////////////////////////////////////////////////////
 NTSTATUS
-BasicUsbEvtDeviceD0Exit(
-    IN WDFDEVICE              Device,
-    IN WDF_POWER_DEVICE_STATE TargetState
-    )
+BasicUsbEvtDeviceD0Exit(WDFDEVICE              Device,
+                        WDF_POWER_DEVICE_STATE TargetState)
 {
     PBASICUSB_DEVICE_CONTEXT devContext;
     WDFIOTARGET              interruptIoTarget;
@@ -797,12 +793,10 @@ BasicUsbEvtDeviceD0Exit(
 //
 ///////////////////////////////////////////////////////////////////////////////
 VOID
-BasicUsbInterruptPipeReadComplete(
-    IN WDFUSBPIPE Pipe,
-    IN WDFMEMORY  Buffer,
-    IN size_t     NumBytesTransferred,
-    IN WDFCONTEXT Context
-    )
+BasicUsbInterruptPipeReadComplete(WDFUSBPIPE Pipe,
+                                  WDFMEMORY  Buffer,
+                                  size_t     NumBytesTransferred,
+                                  WDFCONTEXT Context)
 {
     PUCHAR dataBuffer;
 
@@ -1070,12 +1064,10 @@ DoneWithoutComplete:
 //
 ///////////////////////////////////////////////////////////////////////////////
 VOID
-BasicUsbEvtRequestWriteCompletionRoutine(
-    IN WDFREQUEST                     Request,
-    IN WDFIOTARGET                    Target,
-    IN PWDF_REQUEST_COMPLETION_PARAMS Params,
-    IN WDFCONTEXT                     Context
-    )
+BasicUsbEvtRequestWriteCompletionRoutine(WDFREQUEST                     Request,
+                                         WDFIOTARGET                    Target,
+                                         PWDF_REQUEST_COMPLETION_PARAMS Params,
+                                         WDFCONTEXT                     Context)
 {
     PWDF_USB_REQUEST_COMPLETION_PARAMS usbParams;
 

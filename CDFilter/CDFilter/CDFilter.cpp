@@ -1,5 +1,5 @@
 //
-// Copyright 2007-2022 OSR Open Systems Resources, Inc.
+// Copyright 2007-2023 OSR Open Systems Resources, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -7,15 +7,15 @@
 //
 // 1. Redistributions of source code must retain the above copyright notice,
 //    this list of conditions and the following disclaimer.
-// 
+//
 // 2. Redistributions in binary form must reproduce the above copyright notice,
 //    this list of conditions and the following disclaimer in the documentation
 //    and/or other materials provided with the distribution.
-// 
+//
 // 3. Neither the name of the copyright holder nor the names of its
 //    contributors may be used to endorse or promote products derived from this
 //    software without specific prior written permission.
-// 
+//
 //    This software is supplied for instructional purposes only.  It is not
 //    complete, and it is not suitable for use in any production environment.
 //
@@ -34,7 +34,7 @@
 //    jurisdictions do not allow the exclusion or limitation of liability for
 //    consequential or incidental damages, the above limitation may not apply
 //    to you.
-// 
+//
 
 #include "CDFilter.h"
 
@@ -51,7 +51,7 @@
 //                     driver.
 //
 //      RegistryPath - UNICODE_STRING which represents this driver's key in the
-//                     Registry.  
+//                     Registry.
 //
 //  OUTPUTS:
 //
@@ -84,7 +84,7 @@ DriverEntry(PDRIVER_OBJECT  DriverObject,
 #endif
 
     //
-    // Initialize our driver config structure, specifying our 
+    // Initialize our driver config structure, specifying our
     // EvtDeviceAdd Event Processing Callback.
     //
     WDF_DRIVER_CONFIG_INIT(&driverConfig,

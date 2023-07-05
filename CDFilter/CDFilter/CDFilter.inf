@@ -15,7 +15,7 @@ CatalogFile = CDFilter.cat
 ; General installation section
 ;
 
-[DefaultInstall.NT]
+[DefaultInstall.NTAMD64]
 CopyFiles = @CDFilter.sys
 Addreg    = CDFilter.AddReg
 
@@ -30,7 +30,7 @@ HKLM, System\CurrentControlSet\Control\Class\{4d36e965-e325-11ce-bfc1-08002be103
 ; Service installation section
 ;
 
-[DefaultInstall.NT.Services]
+[DefaultInstall.NTAMD64.Services]
 AddService = CDFilter, , CDFilter.Service.Install
 
 [CDFilter.Service.Install]
